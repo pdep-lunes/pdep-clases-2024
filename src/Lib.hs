@@ -11,6 +11,15 @@ data Personaje = UnPersonaje {
 type PoderBasico = Personaje -> Personaje
 type SuperPoder = String
 
+bolaEspinosa :: PoderBasico
+bolaEspinosa unPersonaje = unPersonaje { cantidadDeVida = max 0 (cantidadDeVida unPersonaje - 1000) }
+
+-- Si quiero establecer un techo uso min
+-- Si quiero establecer un piso uso max
+
+espina :: Personaje
+espina = UnPersonaje "Espina" bolaEspinosa "Granada de espinas" True 4800
+
 {-
 Repositorio: "Album de fotos"
 Repositorio remoto: "Copia del album en la nube"
