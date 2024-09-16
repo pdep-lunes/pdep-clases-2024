@@ -90,6 +90,11 @@ object pepita { // AVE, NO ME ACUERDO CUAL
     method curar() {
           self.comer(400)
       }
+      
+    method serPerseguida(){
+    	energia -= 10
+    }
+   
   }
 
 
@@ -172,6 +177,8 @@ class Perro{
 
         energia -= 50
         juguetes.remove(juguetes.first())
+        kali.serPerseguida()
+        
      }
 
 
