@@ -1,41 +1,31 @@
-class Perro{
-
-    var energia
+class Perro inherits Animal{
     const juguetes = []
-
-    method energia() = energia
-  
-    method comer(unosGramos) {
+    
+    override method comer(unosGramos) {
         energia += unosGramos / juguetes.size()
     }
     
-    method estaFeliz(){
+    override method estaFeliz(){
         return juguetes.contains("pelota")
       }
 
-      method curar(){
+    override method curar(){
         self.comer(50)
     }
 
     method perseguirA(unGato){
-
         energia -= 50
         juguetes.remove(juguetes.first())
         unGato.serPerseguido()
-        
      }
 
 
 }
 
-class Caballo {
-  var energia
 
-  method energia() {
-    return energia
-  }
+class Caballo inherits Animal {
 
-  method comer(unosGramos) {
+  override method comer(unosGramos) {
     energia += 2 * unosGramos
   }
 
@@ -43,29 +33,42 @@ class Caballo {
     energia -= unaDistancia
   }
 
-  method estaFeliz() = true
+  override method estaFeliz() = true
 
-  method curar() {
+  override method curar() {
     self.galopar(3)
 		self.comer(3000)
 		self.galopar(5)
   }
 }
 
-class Ave { 
-    var energia
+object pegaso inherits Caballo(energia = 100000000000, responsable = "Hércules"){
+  var dondeEsta = "Olimpo"
+
+  method volarHacia(unaCiudad) {
+      dondeEsta = unaCiudad
+      energia /= 2
+  }
+
+  override method estaFeliz(){
+    return super() && dondeEsta == "Olimpo"
+  }
+
+  override method pasarElTiempo(unTiempo){
+    self.volarHacia("Olimpo")
+  }
+
+
+}
+
+class Golondrina inherits Animal{ 
     var dondeEsta
-  
-    method energia() {
-      return energia
-    }
-  
   
     method dondeEsta() {
       return dondeEsta
     }
   
-    method comer(unosGramos) {
+    override method comer(unosGramos) {
       energia += unosGramos / 2
     }
   
@@ -74,32 +77,32 @@ class Ave {
       energia /= 2
     }
   
-    method estaFeliz() {
+    override method estaFeliz() {
       return dondeEsta == "Lihuel Calel"
     }
   
-    method curar() {
+    override method curar() {
       self.volarHacia("Lihuel Calel")
+    }
+
+    override method pasarElTiempo(unTiempo){
+      super(unTiempo*2)
+      self.volarHacia("Mar del Plata")
     }
   }
 
 
-  class Gato { 
-    var energia
-  
-    method energia() = energia
-
-  
-    method comer(unosGramos) {
+  class Gato inherits Animal{ 
+    
+    override method comer(unosGramos) {
       energia += unosGramos
     }
 
-  
-    method estaFeliz() {
+    override method estaFeliz() {
       return energia > 30
     }
   
-    method curar() {
+    override method curar() {
           self.comer(400)
       }
       
@@ -109,11 +112,35 @@ class Ave {
    
   }
 
+  //clase abstracta
+  class Animal {
+    const responsable
+    var energia
+
+    method energia() = energia
+
+    method responsable() = responsable
+
+    method gritoNombreDeResponsable(){
+      return responsable.toUpperCase() + "!"
+    }
+
+    method comer(unosGramos)
+
+    method pasarElTiempo(unTiempo){
+      energia += unTiempo
+    }
+
+    method estaFeliz()
+    method curar()
+
+  }
+
+
+
 //Instancias
-/*
 const canela = new Perro(energia = 100, responsable = "Lu", juguetes = ["soga","pelota"])
 const juana = new Perro(energia = 100, responsable = "Nico", juguetes = ["trapo","pelota","espatula"])
 const nano = new Caballo(energia = 100, responsable = "Ro")
-const pepita = new Ave(energia = 100, responsable = "Gus", dondeEsta = "General las Heras")
+const pepita = new Golondrina(energia = 100, responsable = "Gus", dondeEsta = "General las Heras")
 const kali = new Gato(energia = 100, responsable = "Dani")
-*/
